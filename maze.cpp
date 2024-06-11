@@ -153,6 +153,59 @@ map<int, map<int, int> > createMaze(int* dims)
   return newMaze;
 }
 
+bool move(map<int, map<int, int> > maze, int* pos)
+{
+  string input;
+  cin >> input;
+  string direction = input;
+  int dirCode;
+  if (direction == "up")
+    {
+      dirCode = 0;
+    }
+  else if (direction == "down")
+    {
+      dirCode = 1;
+    }
+  else if (direction == "right")
+    {
+      dirCode = 2;
+    }
+  else
+    {
+      dirCode = 3;
+    }
+  cin >> input;
+  int distance = stoi(input);
+  int currentCell = (pos[0] << 16) + pos[1];
+  for (int n = 0; n < distance; n ++)
+    {
+      if (!maze[currentCell].count(dirCode))
+        {
+          cout << "wall" << endl;
+          return false;
+        }
+      currentCell = maze[currentCell][dirCode];
+    }
+  if (direction == "up")
+    {
+      pos[0] -= distance;
+    }
+  else if (direction == "down")
+    {
+      pos[0] += distance;
+    }
+  else if (direction == "right")
+    {
+      pos[1] += distance;
+    }
+  else
+    {
+      pos[1] -= distance;
+    }
+  return true;
+}
+
 int main(int argc, char** argv)
 {
   srand(time(NULL));
@@ -162,7 +215,17 @@ int main(int argc, char** argv)
       int cols = stoi((string) argv[2]);
       int inputs[2] = {rows, cols};
       map<int, map<int, int> > theMaze = createMaze(inputs);
-      printMaze(theMaze, rows, cols);
+      vector<string> layout = writeMaze(theMaze, rows, cols);
+      int expl[2] = {0, 0};
+      int goal[2] = {rows - 1, cols - 1};
+      printMaze(layout, expl, goal);
+      while (expl[0] != goal[0] || expl[1] != goal[1])
+        {
+          if (move(theMaze, expl))
+            {
+              printMaze(layout, expl, goal);
+            }
+        }
     }
   return 0;
 }
