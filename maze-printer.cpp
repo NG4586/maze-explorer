@@ -59,7 +59,7 @@ vector<string> writeMaze(map<int, map<int, int> > maze, int rows, int cols)
                         }
                       else
                         {
-                          nextLine += " ─";
+                          nextLine += " ╶";
                         }
                     }
                   else
@@ -108,7 +108,7 @@ vector<string> writeMaze(map<int, map<int, int> > maze, int rows, int cols)
                     {
                       if (maze[keys[0]].count(1))
                         {
-                          nextLine += "─ ";
+                          nextLine += "─╴";
                         }
                       else
                         {
@@ -193,7 +193,7 @@ void printMaze(vector<string> maze, int* player, int* dest)
     {
       cout << "  ";
     }
-  cout << " ┆" << endl;
+  cout << " ║" << endl;
   for (int r = 0; r < maze.size(); r ++)
     {
       if (r == player[0])
@@ -224,5 +224,6 @@ void printMaze(vector<string> maze, int* player, int* dest)
     {
       cout << "  ";
     }
-  cout << " ┆" << endl;
+  cout << " ║" << endl;
+  cout << endl;
 }
